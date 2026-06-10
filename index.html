@@ -738,8 +738,10 @@
 
   async function uploadAllFiles() {
     const chips = document.querySelectorAll('.file-chip')
+    console.log('uploadAllFiles: found', chips.length, 'chips')
     const docs = []
     for (const chip of chips) {
+      console.log('chip._file:', chip._file, 'docType:', chip.dataset.docType)
       if (!chip._file) continue
       const fd = new FormData()
       fd.append('file', chip._file)
@@ -747,9 +749,11 @@
       try {
         const res = await fetch('https://loan-crm-two.vercel.app/api/upload-public', { method: 'POST', body: fd })
         const json = await res.json()
+        console.log('upload response:', JSON.stringify(json))
         if (json.ok) docs.push({ url: json.url, name: json.name, docType: chip.dataset.docType || 'Document' })
       } catch (e) { console.warn('File upload failed:', e) }
     }
+    console.log('uploadAllFiles result:', JSON.stringify(docs))
     return docs
   }
 
