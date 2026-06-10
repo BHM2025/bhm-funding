@@ -842,6 +842,38 @@
 
     const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw207PBDBZkmoKu_lQKESjCPz2_TuXUzgdQi7H9Or00rKzeq9cVpl-yFk5Mns1WE652Ow/exec'
 
+    const crmData = {
+      submissionId: `bhm-${Date.now()}`,
+      businessLegalName: data.businessLegalName,
+      dba: data.dba,
+      industry: data.industry,
+      amountRequested: data.amountRequested,
+      useOfFunds: data.useOfFunds,
+      mostImportant: data.mostImportant,
+      firstTimeFunding: data.firstTimeFunding,
+      entityType: data.entityType,
+      dateStarted: data.dateStarted,
+      numEmployees: data.numEmployees,
+      ein: data.ein,
+      creditScore: data.creditScore,
+      businessStreet: data.businessStreet,
+      businessCity: data.businessCity,
+      businessState: data.businessState,
+      businessZip: data.businessZip,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      dob: data.dob,
+      ssn: data.ssn,
+      email: data.email,
+      phone: data.phone,
+      ownershipPct: data.ownershipPct,
+      homeStreet: data.homeStreet,
+      homeCity: data.homeCity,
+      homeState: data.homeState,
+      homeZip: data.homeZip,
+      signature: data.signature,
+    }
+
     Promise.all([
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -853,6 +885,11 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
         mode: 'no-cors'
+      }),
+      fetch('https://loan-crm-two.vercel.app/api/webhooks/bhm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(crmData)
       })
     ])
     .then(([web3res]) => {
