@@ -832,8 +832,22 @@
       cc: 'jenna@blueharbor-media.com,deuz@blueharbor-media.com,joemar@blueharbor-media.com,steffanie@blueharbor-media.com',
       from_name: 'BHM Funding Application'
     }
-    new FormData(document.getElementById('fundingForm')).forEach((v, k) => { data[k] = v })
-    data.signature = hasSig ? 'Signed (drawn signature provided)' : ''
+    const fields = [
+      'todayDate','amountRequested','businessLegalName','dba','industry','entityType',
+      'dateStarted','numEmployees','ein','creditScore','useOfFunds',
+      'businessStreet','businessCity','businessState','businessZip',
+      'firstName','lastName','dob','email','phone','ownershipPct','ownHome',
+      'homeStreet','homeCity','homeState','homeZip','cashAdvanceDetails'
+    ]
+    fields.forEach(k => {
+      const el = document.querySelector(`[name="${k}"]`)
+      if (el && el.value.trim()) data[k] = el.value.trim()
+    })
+    ;['mostImportant','firstTimeFunding','hasCashAdvance'].forEach(k => {
+      const el = document.querySelector(`[name="${k}"]:checked`)
+      if (el) data[k] = el.value
+    })
+    data.signature = hasSig ? 'Drawn signature provided' : ''
 
     const btn = document.querySelector('.submit-btn')
     btn.textContent = 'Submitting…'
