@@ -892,6 +892,7 @@
       })
     ])
     .then(([web3res]) => {
+      console.log('Web3Forms response:', JSON.stringify(web3res))
       if (web3res.success) {
         document.getElementById('fundingForm').classList.add('hidden')
         document.getElementById('fundingForm').style.display = 'none'
@@ -900,14 +901,14 @@
       } else {
         btn.textContent = 'Submit Application →'
         btn.disabled = false
-        document.getElementById('formError').textContent = 'Submission failed. Please try again.'
+        document.getElementById('formError').textContent = 'Error: ' + (web3res.message || JSON.stringify(web3res))
         document.getElementById('formError').classList.add('show')
       }
     })
-    .catch(() => {
+    .catch(err => {
       btn.textContent = 'Submit Application →'
       btn.disabled = false
-      document.getElementById('formError').textContent = 'Network error. Please check your connection and try again.'
+      document.getElementById('formError').textContent = 'Network error: ' + err.message
       document.getElementById('formError').classList.add('show')
     })
   })
