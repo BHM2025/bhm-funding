@@ -725,9 +725,12 @@
   }
   function addFiles(group, files) {
     const chips = group.querySelector('.file-chips')
+    const docType = group.dataset.label || 'Document'
     Array.from(files).forEach(f => {
       const chip = document.createElement('span')
       chip.className = 'file-chip'
+      chip.dataset.docType = docType
+      chip._file = f
       chip.innerHTML = `📄 ${f.name} <button type="button" onclick="this.parentElement.remove()">×</button>`
       chips.appendChild(chip)
     })
