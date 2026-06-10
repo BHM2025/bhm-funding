@@ -583,14 +583,23 @@
     btn.textContent = 'Submitting…'
     btn.disabled = true
 
-    fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(data)
-    })
-    .then(r => r.json())
-    .then(res => {
-      if (res.success) {
+    const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw207PBDBZkmoKu_lQKESjCPz2_TuXUzgdQi7H9Or00rKzeq9cVpl-yFk5Mns1WE652Ow/exec'
+
+    Promise.all([
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(r => r.json()),
+      fetch(SHEETS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        mode: 'no-cors'
+      })
+    ])
+    .then(([web3res]) => {
+      if (web3res.success) {
         document.getElementById('fundingForm').classList.add('hidden')
         document.getElementById('successScreen').classList.remove('hidden')
         window.scrollTo({ top: 0, behavior: 'smooth' })
