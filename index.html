@@ -833,7 +833,7 @@
       from_name: 'BHM Funding Application'
     }
     new FormData(document.getElementById('fundingForm')).forEach((v, k) => { data[k] = v })
-    data.signature = canvas.toDataURL('image/png')
+    data.signature = hasSig ? 'Signed (drawn signature provided)' : ''
 
     const btn = document.querySelector('.submit-btn')
     btn.textContent = 'Submitting…'
