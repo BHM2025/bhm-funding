@@ -725,9 +725,28 @@
     Array.from(files).forEach(f => {
       const chip = document.createElement('span')
       chip.className = 'file-chip'
+      chip.dataset.docType = container.closest('.upload-group').dataset.label
       chip.innerHTML = `📄 ${f.name} <button type="button" onclick="this.parentElement.remove()">×</button>`
+      chip._file = f
       chips.appendChild(chip)
     })
+  }
+
+  async function uploadAllFiles() {
+    const chips = document.querySelectorAll('.file-chip')
+    const docs = []
+    for (const chip of chips) {
+      if (!chip._file) continue
+      const fd = new FormData()
+      fd.append('file', chip._file)
+      fd.append('docType', chip.dataset.docType || 'Document')
+      try {
+        const res = await fetch('https://loan-crm-two.vercel.app/api/upload-public', { method: 'POST', body: fd })
+        const json = await res.json()
+        if (json.ok) docs.push({ url: json.url, name: json.name, docType: chip.dataset.docType || 'Document' })
+      } catch (e) { console.warn('File upload failed:', e) }
+    }
+    return docs
   }
 
   // Signature pad
@@ -907,6 +926,12 @@ ${hasSig ? 'Drawn signature provided' : 'No signature'}
       homeZip: data.homeZip,
       signature: data.signature,
     }
+
+    // Upload files first, then submit
+    btn.textContent = 'Uploading files…'
+    const documents = await uploadAllFiles()
+    crmData.documents = documents
+    btn.textContent = 'Submitting…'
 
     Promise.all([
       fetch('https://api.web3forms.com/submit', {
