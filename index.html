@@ -3,171 +3,367 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BHM Funding Application</title>
+  <title>BHM Business Loan Application</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    * { font-family: 'Inter', sans-serif; }
-    body { background: #f0f4f8; }
-    .sig-font { font-family: 'Georgia', serif; font-style: italic; font-size: 1.1rem; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #e8edf5; min-height: 100vh; }
 
-    .field {
-      width: 100%;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 0.875rem;
-      color: #1e293b;
-      background: #fff;
-      outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
+    /* ── Header ── */
+    .form-header {
+      background: linear-gradient(135deg, #0a2463 0%, #1565c0 100%);
+      padding: 36px 40px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-    .field:focus {
-      border-color: #1d4ed8;
-      box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
+    .form-header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
     }
-    .field.error { border-color: #ef4444; }
-    .field::placeholder { color: #94a3b8; }
-
-    .label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #475569;
-      margin-bottom: 5px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
+    .form-header::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: -40px;
+      width: 150px; height: 150px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
     }
-
-    .section-card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
-      border: 1px solid #e8edf2;
-      padding: 2rem 2.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .section-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #0f172a;
-      padding-bottom: 0.85rem;
-      margin-bottom: 1.5rem;
-      border-bottom: 2px solid #e8edf2;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-badge {
+    .header-logo {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      width: 28px;
-      height: 28px;
-      background: #1d4ed8;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .header-icon {
+      width: 52px; height: 52px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .header-company {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .header-subtitle {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.9);
+      margin-top: 14px;
+    }
+
+    /* ── Wrapper ── */
+    .form-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 16px 60px;
+    }
+
+    /* ── Section Cards ── */
+    .section-card {
+      background: #fff;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 28px 32px;
+      margin-bottom: 4px;
+    }
+    .section-card:first-of-type { border-radius: 12px 12px 0 0; margin-top: 0; }
+    .section-card + .section-card { border-top: 1px solid #f0f4f8; }
+    .section-card:last-of-type { border-radius: 0 0 12px 12px; margin-bottom: 20px; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+      border-bottom: 2px solid #f0f4f8;
+    }
+    .section-num {
+      width: 32px; height: 32px;
+      background: #0a2463;
       color: #fff;
       border-radius: 50%;
-      font-size: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
       font-weight: 700;
       flex-shrink: 0;
     }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0a2463;
+      letter-spacing: -0.01em;
+    }
 
-    .drop-zone {
-      border: 2px dashed #cbd5e1;
-      border-radius: 10px;
-      padding: 1.1rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.15s;
-      background: #f8fafc;
-    }
-    .drop-zone:hover, .drop-zone.drag {
-      border-color: #1d4ed8;
-      background: #eff6ff;
-    }
-    .file-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #f1f5f9;
-      padding: 6px 12px;
-      border-radius: 6px;
+    /* ── Fields ── */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid2 .full { grid-column: 1 / -1; }
+    @media (max-width: 540px) { .grid2 { grid-template-columns: 1fr; } .grid2 .full { grid-column: 1; } }
+
+    .field-group { display: flex; flex-direction: column; gap: 5px; }
+    .field-label {
       font-size: 0.8rem;
-      margin-top: 6px;
-      color: #334155;
+      font-weight: 600;
+      color: #374151;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
     }
+    .field-label .req { color: #e53e3e; margin-left: 2px; }
 
-    .radio-opt {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border: 1.5px solid #e2e8f0;
+    .field {
+      width: 100%;
+      border: 1.5px solid #dde3ec;
       border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      color: #1a202c;
+      background: #fafbfd;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+      outline: none;
+    }
+    .field:focus {
+      border-color: #1565c0;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(21,101,192,0.12);
+    }
+    .field.error { border-color: #e53e3e; background: #fff5f5; }
+    .field::placeholder { color: #a0aec0; font-size: 0.875rem; }
+    textarea.field { resize: vertical; min-height: 90px; }
+
+    .err-msg { font-size: 0.75rem; color: #e53e3e; margin-top: 2px; display: none; }
+    .err-msg.show { display: block; }
+
+    /* ── Radio pills ── */
+    .radio-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+    .radio-pill {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 16px;
+      border: 1.5px solid #dde3ec;
+      border-radius: 50px;
       cursor: pointer;
       font-size: 0.85rem;
       font-weight: 500;
-      color: #475569;
+      color: #4a5568;
+      background: #fafbfd;
       transition: all 0.15s;
       user-select: none;
     }
-    .radio-opt:has(input:checked) {
-      border-color: #1d4ed8;
-      background: #eff6ff;
-      color: #1d4ed8;
+    .radio-pill:has(input:checked) {
+      border-color: #1565c0;
+      background: #ebf2fb;
+      color: #1565c0;
+      font-weight: 600;
     }
-    .radio-opt input { accent-color: #1d4ed8; }
+    .radio-pill input { accent-color: #1565c0; }
 
+    /* ── Sub heading ── */
+    .sub-heading {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #718096;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin: 24px 0 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .sub-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e8edf5;
+    }
+
+    /* ── Upload zones ── */
+    .upload-zone {
+      border: 2px dashed #cbd5e0;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      background: #f7fafc;
+      transition: all 0.15s;
+    }
+    .upload-zone:hover, .upload-zone.drag {
+      border-color: #1565c0;
+      background: #ebf2fb;
+    }
+    .upload-icon { color: #a0aec0; margin-bottom: 6px; }
+    .upload-text { font-size: 0.82rem; color: #718096; }
+    .upload-text span { color: #1565c0; font-weight: 600; }
+    .file-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #ebf2fb; border: 1px solid #bee3f8;
+      border-radius: 6px; padding: 4px 10px;
+      font-size: 0.78rem; color: #2b6cb0;
+      margin: 4px 4px 0 0;
+    }
+    .file-chip button {
+      background: none; border: none; cursor: pointer;
+      color: #e53e3e; font-weight: 700; font-size: 0.9rem; line-height: 1; padding: 0;
+    }
+
+    /* ── Info box ── */
+    .info-box {
+      background: #ebf8ff;
+      border-left: 4px solid #1565c0;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      color: #2c5282;
+      margin-bottom: 20px;
+    }
+
+    /* ── Authorization ── */
+    .auth-text {
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 0.82rem;
+      color: #4a5568;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    /* ── Signature Pad ── */
+    .sig-pad-wrap {
+      border: 1.5px solid #dde3ec;
+      border-radius: 10px;
+      background: #fafbfd;
+      overflow: hidden;
+      position: relative;
+    }
+    .sig-pad-wrap canvas {
+      display: block;
+      width: 100%;
+      cursor: crosshair;
+      touch-action: none;
+    }
+    .sig-pad-hint {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.85rem;
+      color: #cbd5e0;
+      pointer-events: none;
+      user-select: none;
+      transition: opacity 0.2s;
+    }
+    .sig-pad-toolbar {
+      display: flex;
+      justify-content: flex-end;
+      padding: 6px 10px;
+      border-top: 1px solid #e8edf5;
+      background: #f7fafc;
+    }
+    .sig-clear-btn {
+      background: none;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      color: #718096;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+    }
+    .sig-clear-btn:hover { border-color: #e53e3e; color: #e53e3e; }
+
+    /* ── Submit ── */
+    .submit-wrap { padding: 8px 0 0; }
     .submit-btn {
       width: 100%;
-      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      background: linear-gradient(135deg, #e65c00, #f9a825);
       color: #fff;
       font-weight: 700;
       font-size: 1rem;
-      padding: 14px;
-      border-radius: 12px;
+      padding: 15px;
+      border-radius: 10px;
       border: none;
       cursor: pointer;
       letter-spacing: 0.02em;
-      box-shadow: 0 4px 14px rgba(29,78,216,0.35);
+      box-shadow: 0 4px 16px rgba(230,92,0,0.35);
       transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
     }
-    .submit-btn:hover {
-      background: linear-gradient(135deg, #1e40af, #1d4ed8);
-      box-shadow: 0 6px 20px rgba(29,78,216,0.45);
+    .submit-btn:hover:not(:disabled) {
       transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(230,92,0,0.45);
     }
+    .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+    .submit-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #a0aec0;
+      margin-top: 10px;
+    }
+    .form-error {
+      text-align: center;
+      font-size: 0.82rem;
+      color: #e53e3e;
+      font-weight: 500;
+      margin-top: 10px;
+      display: none;
+    }
+    .form-error.show { display: block; }
 
-    .sub-heading {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #64748b;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-top: 1.5rem;
-      margin-bottom: 0.85rem;
-      padding-bottom: 0.4rem;
-      border-bottom: 1px solid #f1f5f9;
+    /* ── Success ── */
+    .success-screen {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 60px 40px;
+      text-align: center;
+      display: none;
+      margin-bottom: 20px;
+    }
+    .success-screen.show { display: block; }
+    .success-icon {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, #38a169, #276749);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
     }
   </style>
 </head>
-<body class="min-h-screen py-10 px-4">
+<body>
 
-<div class="max-w-2xl mx-auto">
+<div class="form-wrap">
 
   <!-- Header -->
-  <div class="text-center mb-8">
-    <div style="margin-bottom:10px;">
-      <div style="width:56px;height:56px;background:linear-gradient(135deg,#1d4ed8,#0ea5e9);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
-        <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path fill="#fff" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+  <div class="form-header" style="border-radius:12px 12px 0 0; margin-top:32px;">
+    <div class="header-logo">
+      <div class="header-icon">
+        <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path fill="#fff" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </div>
-      <div style="font-size:1.6rem;font-weight:800;color:#0f172a;letter-spacing:-0.02em;">Blue Harbor Media</div>
-      <div style="font-size:1rem;color:#475569;font-weight:500;margin-top:4px;">Business Loan Application Form 📄💼</div>
+      <span class="header-company">Blue Harbor Media</span>
     </div>
-    <div style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:6px 14px;font-size:0.78rem;color:#475569;">
-      <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path fill="#22c55e" d="M12 1a11 11 0 100 22A11 11 0 0012 1zm-1 16l-4-4 1.4-1.4L11 14.2l5.6-5.6L18 10l-7 7z"/></svg>
+    <div class="header-subtitle">Business Loan Application Form 📄💼</div>
+    <div class="header-badge">
+      <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path fill="#4ade80" d="M12 1a11 11 0 100 22A11 11 0 0012 1zm-1 16l-4-4 1.4-1.4L11 14.2l5.6-5.6L18 10l-7 7z"/></svg>
       Secure &amp; Confidential Application
     </div>
   </div>
@@ -176,34 +372,37 @@
 
     <!-- 1. Business Information -->
     <div class="section-card">
-      <div class="section-title">
-        <span class="section-badge">1</span>
-        Business Information
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-title">Business Information</div>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="grid2">
 
-        <div>
-          <label class="label">Today's Date <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Today's Date <span class="req">*</span></label>
           <input type="date" name="todayDate" class="field" required />
+          <span class="err-msg" id="err-todayDate">Required</span>
         </div>
 
-        <div>
-          <label class="label">Amount Requested <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Amount Requested <span class="req">*</span></label>
           <input type="text" name="amountRequested" placeholder="e.g. $50,000" class="field" required />
+          <span class="err-msg" id="err-amountRequested">Required</span>
         </div>
 
-        <div>
-          <label class="label">Business Legal Name <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Business Legal Name <span class="req">*</span></label>
           <input type="text" name="businessLegalName" class="field" required />
+          <span class="err-msg" id="err-businessLegalName">Required</span>
         </div>
 
-        <div>
-          <label class="label">DBA / Doing Business As</label>
+        <div class="field-group">
+          <label class="field-label">DBA / Doing Business As</label>
           <input type="text" name="dba" class="field" />
         </div>
 
-        <div>
-          <label class="label">Industry <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Industry <span class="req">*</span></label>
           <select name="industry" class="field" required>
             <option value="">Select industry...</option>
             <option>Automotive</option><option>Construction</option><option>Education</option>
@@ -213,34 +412,38 @@
             <option>Manufacturing</option><option>Real Estate</option><option>Retail</option>
             <option>Transportation</option><option>Other</option>
           </select>
+          <span class="err-msg" id="err-industry">Required</span>
         </div>
 
-        <div>
-          <label class="label">Entity Type <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Entity Type <span class="req">*</span></label>
           <select name="entityType" class="field" required>
             <option value="">Select type...</option>
             <option>Corporation</option><option>Sole Proprietor</option>
             <option>LLC</option><option>Partnership</option>
           </select>
+          <span class="err-msg" id="err-entityType">Required</span>
         </div>
 
-        <div>
-          <label class="label">Date Business Started (MM/YYYY) <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Date Business Started (MM/YYYY) <span class="req">*</span></label>
           <input type="text" name="dateStarted" placeholder="MM/YYYY" class="field" required />
+          <span class="err-msg" id="err-dateStarted">Required</span>
         </div>
 
-        <div>
-          <label class="label">Number of Employees</label>
-          <input type="number" name="numEmployees" min="0" class="field" placeholder="0" />
+        <div class="field-group">
+          <label class="field-label">Number of Employees</label>
+          <input type="number" name="numEmployees" min="0" placeholder="0" class="field" />
         </div>
 
-        <div>
-          <label class="label">Federal Tax ID / EIN <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Federal Tax ID / EIN <span class="req">*</span></label>
           <input type="text" name="ein" placeholder="XX-XXXXXXX" class="field" required />
+          <span class="err-msg" id="err-ein">Required</span>
         </div>
 
-        <div>
-          <label class="label">Credit Score <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Credit Score <span class="req">*</span></label>
           <select name="creditScore" class="field" required>
             <option value="">Select range...</option>
             <option>Poor (300–579)</option><option>Fair (580–669)</option>
@@ -248,60 +451,64 @@
             <option>Exceptional (800–850)</option>
             <option>I Don't Know</option><option>Prefer Not to Say</option>
           </select>
+          <span class="err-msg" id="err-creditScore">Required</span>
         </div>
 
-        <div class="sm:col-span-2">
-          <label class="label">Use of Funds <span style="color:#ef4444">*</span></label>
-          <textarea name="useOfFunds" rows="3" class="field" placeholder="Describe how you plan to use the funding..."></textarea>
+        <div class="field-group full">
+          <label class="field-label">Use of Funds <span class="req">*</span></label>
+          <textarea name="useOfFunds" class="field" placeholder="Describe how you plan to use the funding..."></textarea>
+          <span class="err-msg" id="err-useOfFunds">Required</span>
         </div>
 
-        <div class="sm:col-span-2">
-          <label class="label" style="margin-bottom:10px;">What is most important to you? <span style="color:#ef4444">*</span></label>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;">
-            <label class="radio-opt"><input type="radio" name="mostImportant" value="Amount" /> Amount</label>
-            <label class="radio-opt"><input type="radio" name="mostImportant" value="Cost" /> Cost</label>
-            <label class="radio-opt"><input type="radio" name="mostImportant" value="Speed of Funding" /> Speed of Funding</label>
+        <div class="field-group full">
+          <label class="field-label" style="margin-bottom:8px;">What is most important to you? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-pill"><input type="radio" name="mostImportant" value="Amount" /> Amount</label>
+            <label class="radio-pill"><input type="radio" name="mostImportant" value="Cost" /> Cost</label>
+            <label class="radio-pill"><input type="radio" name="mostImportant" value="Speed of Funding" /> Speed of Funding</label>
           </div>
-          <p class="hidden text-red-500 text-xs mt-1" id="err-mostImportant">Please select an option</p>
+          <span class="err-msg" id="err-mostImportant">Please select one</span>
         </div>
 
-        <div>
-          <label class="label" style="margin-bottom:10px;">First time taking funding? <span style="color:#ef4444">*</span></label>
-          <div style="display:flex;gap:8px;">
-            <label class="radio-opt"><input type="radio" name="firstTimeFunding" value="Yes" /> Yes</label>
-            <label class="radio-opt"><input type="radio" name="firstTimeFunding" value="No" /> No</label>
+        <div class="field-group">
+          <label class="field-label" style="margin-bottom:8px;">First time taking funding? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-pill"><input type="radio" name="firstTimeFunding" value="Yes" /> Yes</label>
+            <label class="radio-pill"><input type="radio" name="firstTimeFunding" value="No" /> No</label>
           </div>
-          <p class="hidden text-red-500 text-xs mt-1" id="err-firstTimeFunding">Please select an option</p>
+          <span class="err-msg" id="err-firstTimeFunding">Please select one</span>
         </div>
 
-        <div>
-          <label class="label" style="margin-bottom:10px;">Currently have a cash advance? <span style="color:#ef4444">*</span></label>
-          <div style="display:flex;gap:8px;">
-            <label class="radio-opt"><input type="radio" name="hasCashAdvance" value="Yes" /> Yes</label>
-            <label class="radio-opt"><input type="radio" name="hasCashAdvance" value="No" /> No</label>
+        <div class="field-group">
+          <label class="field-label" style="margin-bottom:8px;">Currently have a cash advance? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-pill"><input type="radio" name="hasCashAdvance" value="Yes" /> Yes</label>
+            <label class="radio-pill"><input type="radio" name="hasCashAdvance" value="No" /> No</label>
           </div>
-          <p class="hidden text-red-500 text-xs mt-1" id="err-hasCashAdvance">Please select an option</p>
+          <span class="err-msg" id="err-hasCashAdvance">Please select one</span>
         </div>
 
-        <div class="sm:col-span-2 hidden" id="cashAdvanceRow">
-          <label class="label">Cash Advance Details</label>
+        <div class="field-group full" id="cashAdvanceRow" style="display:none;">
+          <label class="field-label">Cash Advance Details</label>
           <input type="text" name="cashAdvanceDetails" placeholder="Balance, lender, etc." class="field" />
         </div>
 
       </div>
 
-      <p class="sub-heading">Business Address</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="sm:col-span-2">
-          <label class="label">Street <span style="color:#ef4444">*</span></label>
+      <div class="sub-heading">Business Address</div>
+      <div class="grid2">
+        <div class="field-group full">
+          <label class="field-label">Street <span class="req">*</span></label>
           <input type="text" name="businessStreet" class="field" required />
+          <span class="err-msg" id="err-businessStreet">Required</span>
         </div>
-        <div>
-          <label class="label">City <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">City <span class="req">*</span></label>
           <input type="text" name="businessCity" class="field" required />
+          <span class="err-msg" id="err-businessCity">Required</span>
         </div>
-        <div>
-          <label class="label">State <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">State <span class="req">*</span></label>
           <select name="businessState" class="field" required>
             <option value="">Select...</option>
             <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
@@ -315,79 +522,91 @@
             <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
             <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
           </select>
+          <span class="err-msg" id="err-businessState">Required</span>
         </div>
-        <div>
-          <label class="label">ZIP <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">ZIP <span class="req">*</span></label>
           <input type="text" name="businessZip" maxlength="10" class="field" required />
+          <span class="err-msg" id="err-businessZip">Required</span>
         </div>
       </div>
     </div>
 
     <!-- 2. Owner Personal Information -->
     <div class="section-card">
-      <div class="section-title">
-        <span class="section-badge">2</span>
-        Owner / Personal Information
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-title">Owner / Personal Information</div>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="grid2">
 
-        <div>
-          <label class="label">First Name <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">First Name <span class="req">*</span></label>
           <input type="text" name="firstName" class="field" required />
+          <span class="err-msg" id="err-firstName">Required</span>
         </div>
 
-        <div>
-          <label class="label">Last Name <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Last Name <span class="req">*</span></label>
           <input type="text" name="lastName" class="field" required />
+          <span class="err-msg" id="err-lastName">Required</span>
         </div>
 
-        <div>
-          <label class="label">Date of Birth (MM/DD/YYYY) <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Date of Birth (MM/DD/YYYY) <span class="req">*</span></label>
           <input type="text" name="dob" placeholder="MM/DD/YYYY" class="field" required />
+          <span class="err-msg" id="err-dob">Required</span>
         </div>
 
-        <div>
-          <label class="label">SSN <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">SSN <span class="req">*</span></label>
           <input type="password" name="ssn" placeholder="XXX-XX-XXXX" autocomplete="off" class="field" required />
+          <span class="err-msg" id="err-ssn">Required</span>
         </div>
 
-        <div>
-          <label class="label">Email Address <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Email Address <span class="req">*</span></label>
           <input type="email" name="email" class="field" required />
+          <span class="err-msg" id="err-email">Required</span>
         </div>
 
-        <div>
-          <label class="label">Phone Number <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Phone Number <span class="req">*</span></label>
           <input type="tel" name="phone" placeholder="(555) 555-5555" class="field" required />
+          <span class="err-msg" id="err-phone">Required</span>
         </div>
 
-        <div>
-          <label class="label">Ownership % <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Ownership % <span class="req">*</span></label>
           <input type="number" name="ownershipPct" min="1" max="100" placeholder="e.g. 100" class="field" required />
+          <span class="err-msg" id="err-ownershipPct">Required</span>
         </div>
 
-        <div>
-          <label class="label">Do You Own Your Home? <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">Do You Own Your Home? <span class="req">*</span></label>
           <select name="ownHome" class="field" required>
             <option value="">Select...</option>
             <option>Yes</option><option>No</option>
           </select>
+          <span class="err-msg" id="err-ownHome">Required</span>
         </div>
 
       </div>
 
-      <p class="sub-heading">Home Address</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="sm:col-span-2">
-          <label class="label">Street <span style="color:#ef4444">*</span></label>
+      <div class="sub-heading">Home Address</div>
+      <div class="grid2">
+        <div class="field-group full">
+          <label class="field-label">Street <span class="req">*</span></label>
           <input type="text" name="homeStreet" class="field" required />
+          <span class="err-msg" id="err-homeStreet">Required</span>
         </div>
-        <div>
-          <label class="label">City <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">City <span class="req">*</span></label>
           <input type="text" name="homeCity" class="field" required />
+          <span class="err-msg" id="err-homeCity">Required</span>
         </div>
-        <div>
-          <label class="label">State <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">State <span class="req">*</span></label>
           <select name="homeState" class="field" required>
             <option value="">Select...</option>
             <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
@@ -401,24 +620,26 @@
             <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
             <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
           </select>
+          <span class="err-msg" id="err-homeState">Required</span>
         </div>
-        <div>
-          <label class="label">ZIP <span style="color:#ef4444">*</span></label>
+        <div class="field-group">
+          <label class="field-label">ZIP <span class="req">*</span></label>
           <input type="text" name="homeZip" maxlength="10" class="field" required />
+          <span class="err-msg" id="err-homeZip">Required</span>
         </div>
       </div>
     </div>
 
     <!-- 3. Documents -->
     <div class="section-card">
-      <div class="section-title">
-        <span class="section-badge">3</span>
-        Documents Needed to Fund
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-title">Documents Needed to Fund</div>
       </div>
-      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;font-size:0.8rem;color:#1e40af;margin-bottom:1.25rem;">
-        Please upload clear, readable copies. PDF, JPG, or PNG accepted.
+      <div class="info-box">
+        📎 Please upload clear, readable copies. PDF, JPG, or PNG accepted.
       </div>
-      <div class="space-y-4">
+      <div style="display:flex;flex-direction:column;gap:14px;">
         <div class="upload-group" data-label="Bank Statement 1"></div>
         <div class="upload-group" data-label="Bank Statement 2"></div>
         <div class="upload-group" data-label="Bank Statement 3"></div>
@@ -431,111 +652,146 @@
 
     <!-- 4. Authorization & Signature -->
     <div class="section-card">
-      <div class="section-title">
-        <span class="section-badge">4</span>
-        Authorization &amp; Signature
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-title">Authorization &amp; Signature</div>
       </div>
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;font-size:0.8rem;color:#475569;line-height:1.7;margin-bottom:1.25rem;">
+      <div class="auth-text">
         By signing below, each of the above listed business owners/principals authorizes Blue Harbor Media and its lending partners to obtain consumer and/or business credit reports and to verify the information provided in this application. You also authorize the sharing of this application and related information with potential funding sources. This authorization is valid until revoked in writing. You certify that all information provided is true and accurate to the best of your knowledge.
       </div>
-      <div>
-        <label class="label">Signature — Type your full legal name <span style="color:#ef4444">*</span></label>
-        <input type="text" id="signature" name="signature" placeholder="Full legal name" class="field sig-font" style="font-size:1.05rem;" />
-        <p class="hidden text-red-500 text-xs mt-1" id="err-signature">Signature is required</p>
-        <div id="sigPreview" class="hidden" style="margin-top:10px;padding:10px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;display:flex;align-items:center;justify-content:space-between;">
-          <span style="font-size:0.78rem;color:#64748b;">Signed as: <span id="sigName" class="sig-font" style="color:#0f172a;font-size:1rem;"></span></span>
-          <button type="button" onclick="clearSig()" style="font-size:0.75rem;color:#ef4444;background:none;border:none;cursor:pointer;">Clear</button>
+      <div class="field-group">
+        <label class="field-label">Signature <span class="req">*</span></label>
+        <div class="sig-pad-wrap" id="sigPadWrap">
+          <canvas id="sigCanvas" height="160"></canvas>
+          <div class="sig-pad-hint" id="sigHint">✍️ Sign here</div>
         </div>
+        <div class="sig-pad-toolbar">
+          <button type="button" class="sig-clear-btn" onclick="clearSig()">Clear Signature</button>
+        </div>
+        <span class="err-msg" id="err-signature">Signature is required</span>
       </div>
     </div>
 
     <!-- Submit -->
-    <div style="padding-bottom:3rem;">
-      <button type="submit" class="submit-btn">Submit Application →</button>
-      <p id="formError" class="hidden text-red-600 text-sm text-center mt-3 font-medium">Please complete all required fields before submitting.</p>
-      <p style="text-align:center;font-size:0.75rem;color:#94a3b8;margin-top:12px;">
-        🔒 Your information is encrypted and kept confidential
-      </p>
+    <div class="section-card" style="border-radius:12px !important;">
+      <div class="submit-wrap">
+        <button type="submit" class="submit-btn">Submit Application →</button>
+        <p class="submit-note">🔒 Your information is encrypted and kept confidential</p>
+        <p class="form-error" id="formError">Please complete all required fields before submitting.</p>
+      </div>
     </div>
 
   </form>
 
-  <!-- Success Screen -->
-  <div id="successScreen" class="hidden section-card" style="text-align:center;padding:4rem 2.5rem;">
-    <div style="width:64px;height:64px;background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;">
-      <svg width="32" height="32" fill="none" viewBox="0 0 24 24"><path fill="#fff" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+  <!-- Success -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">
+      <svg width="36" height="36" fill="none" viewBox="0 0 24 24"><path fill="#fff" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
     </div>
-    <h2 style="font-size:1.5rem;font-weight:800;color:#0f172a;margin-bottom:0.5rem;">Application Submitted!</h2>
-    <p style="color:#64748b;font-size:0.95rem;">Thank you! We have received your funding application and will be in touch shortly.</p>
+    <h2 style="font-size:1.5rem;font-weight:800;color:#0a2463;margin-bottom:10px;">Application Submitted!</h2>
+    <p style="color:#718096;font-size:0.95rem;line-height:1.6;">Thank you! We have received your funding application<br>and will be in touch shortly.</p>
   </div>
 
 </div>
 
 <script>
-  // Build file upload widgets
+  // File upload widgets
   document.querySelectorAll('.upload-group').forEach(group => {
     const label = group.dataset.label
     group.innerHTML = `
       <div>
-        <p class="label" style="margin-bottom:6px;">${label}</p>
-        <div class="drop-zone" onclick="this.nextElementSibling.click()"
+        <p style="font-size:0.8rem;font-weight:600;color:#374151;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:6px;">${label}</p>
+        <div class="upload-zone" onclick="this.nextElementSibling.click()"
           ondragover="event.preventDefault();this.classList.add('drag')"
           ondragleave="this.classList.remove('drag')"
           ondrop="handleDrop(event,this)">
-          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" style="margin:0 auto 6px;display:block;"><path fill="#94a3b8" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 7V3.5L18.5 9H13zm-3 4l2-2 2 2h-1.5v3h-1v-3H10z"/></svg>
-          <p style="font-size:0.82rem;color:#64748b;">Drag & drop or <span style="color:#1d4ed8;font-weight:600;">click to browse</span></p>
+          <svg class="upload-icon" width="22" height="22" fill="none" viewBox="0 0 24 24" style="display:block;margin:0 auto 6px;"><path fill="#a0aec0" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 7V3.5L18.5 9H13zm-3 5l2-2 2 2h-1.5v3h-1v-3H10z"/></svg>
+          <p class="upload-text">Drag & drop or <span>click to browse</span></p>
         </div>
-        <input type="file" multiple class="hidden" onchange="handleFileInput(event)" />
-        <div class="file-list"></div>
+        <input type="file" multiple style="display:none;" onchange="handleFileInput(event)" />
+        <div class="file-chips" style="margin-top:6px;"></div>
       </div>
     `
   })
 
   function handleDrop(e, zone) {
-    e.preventDefault()
-    zone.classList.remove('drag')
+    e.preventDefault(); zone.classList.remove('drag')
     addFiles(zone.closest('div > div'), e.dataTransfer.files)
   }
   function handleFileInput(e) {
-    addFiles(e.target.closest('div > div'), e.target.files)
-    e.target.value = ''
+    addFiles(e.target.closest('div > div'), e.target.files); e.target.value = ''
   }
   function addFiles(container, files) {
-    const list = container.querySelector('.file-list')
+    const chips = container.querySelector('.file-chips')
     Array.from(files).forEach(f => {
-      const item = document.createElement('div')
-      item.className = 'file-item'
-      item.innerHTML = `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:80%;">${f.name}</span><button type="button" onclick="this.parentElement.remove()" style="background:none;border:none;color:#ef4444;cursor:pointer;font-weight:700;font-size:1rem;line-height:1;">×</button>`
-      list.appendChild(item)
+      const chip = document.createElement('span')
+      chip.className = 'file-chip'
+      chip.innerHTML = `📄 ${f.name} <button type="button" onclick="this.parentElement.remove()">×</button>`
+      chips.appendChild(chip)
     })
   }
 
-  // Signature
-  document.getElementById('signature').addEventListener('input', function() {
-    const val = this.value.trim()
-    document.getElementById('sigName').textContent = val
-    document.getElementById('sigPreview').classList.toggle('hidden', !val)
-    document.getElementById('err-signature').classList.add('hidden')
-  })
-  function clearSig() {
-    document.getElementById('signature').value = ''
-    document.getElementById('sigPreview').classList.add('hidden')
+  // Signature pad
+  const canvas = document.getElementById('sigCanvas')
+  const ctx = canvas.getContext('2d')
+  let drawing = false, hasSig = false
+
+  function resizeCanvas() {
+    const w = canvas.offsetWidth
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+    canvas.width = w
+    canvas.height = 160
+    ctx.putImageData(imgData, 0, 0)
+    ctx.strokeStyle = '#0a2463'
+    ctx.lineWidth = 2.2
+    ctx.lineCap = 'round'
+    ctx.lineJoin = 'round'
   }
+  resizeCanvas()
+  window.addEventListener('resize', resizeCanvas)
+
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect()
+    const src = e.touches ? e.touches[0] : e
+    return { x: src.clientX - r.left, y: src.clientY - r.top }
+  }
+
+  canvas.addEventListener('mousedown', e => { drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y) })
+  canvas.addEventListener('mousemove', e => { if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); setHasSig() })
+  canvas.addEventListener('mouseup', () => drawing = false)
+  canvas.addEventListener('mouseleave', () => drawing = false)
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y) }, { passive: false })
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); setHasSig() }, { passive: false })
+  canvas.addEventListener('touchend', () => drawing = false)
+
+  function setHasSig() {
+    hasSig = true
+    document.getElementById('sigHint').style.opacity = '0'
+    document.getElementById('err-signature').classList.remove('show')
+  }
+
+  function clearSig() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    hasSig = false
+    document.getElementById('sigHint').style.opacity = '1'
+  }
+
+  function isSigEmpty() { return !hasSig }
 
   // Cash advance toggle
   document.querySelectorAll('input[name="hasCashAdvance"]').forEach(r => {
     r.addEventListener('change', () => {
-      document.getElementById('cashAdvanceRow').classList.toggle('hidden', r.value !== 'Yes')
+      document.getElementById('cashAdvanceRow').style.display = r.value === 'Yes' ? 'flex' : 'none'
     })
   })
 
-  // Validation & submit
+  // Validation
   document.getElementById('fundingForm').addEventListener('submit', function(e) {
     e.preventDefault()
     let valid = true
 
     document.querySelectorAll('.field.error').forEach(f => f.classList.remove('error'))
-    document.querySelectorAll('[id^="err-"]').forEach(el => el.classList.add('hidden'))
+    document.querySelectorAll('.err-msg.show').forEach(el => el.classList.remove('show'))
 
     const required = [
       'todayDate','amountRequested','businessLegalName','industry','entityType',
@@ -546,36 +802,39 @@
     ]
     required.forEach(name => {
       const el = document.querySelector(`[name="${name}"]`)
-      if (el && !el.value.trim()) { el.classList.add('error'); valid = false }
-    })
-
-    ;['mostImportant','firstTimeFunding','hasCashAdvance'].forEach(name => {
-      if (!document.querySelector(`[name="${name}"]:checked`)) {
-        document.getElementById(`err-${name}`).classList.remove('hidden')
+      if (el && !el.value.trim()) {
+        el.classList.add('error')
+        document.getElementById(`err-${name}`)?.classList.add('show')
         valid = false
       }
     })
 
-    if (!document.getElementById('signature').value.trim()) {
-      document.getElementById('err-signature').classList.remove('hidden')
+    ;['mostImportant','firstTimeFunding','hasCashAdvance'].forEach(name => {
+      if (!document.querySelector(`[name="${name}"]:checked`)) {
+        document.getElementById(`err-${name}`).classList.add('show')
+        valid = false
+      }
+    })
+
+    if (isSigEmpty()) {
+      document.getElementById('err-signature').classList.add('show')
       valid = false
     }
 
     if (!valid) {
-      document.getElementById('formError').classList.remove('hidden')
-      const firstErr = document.querySelector('.field.error, [id^="err-"]:not(.hidden)')
-      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      document.getElementById('formError').classList.add('show')
+      document.querySelector('.field.error, .err-msg.show')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
 
-    // Collect all form field values
     const data = {
       access_key: '0c976883-44fe-4650-8610-88bc3aeeed34',
-      subject: 'New BHM Funding Application',
+      subject: 'New BHM Business Loan Application',
       cc: 'jenna@blueharbor-media.com,deuz@blueharbor-media.com,joemar@blueharbor-media.com,steffanie@blueharbor-media.com',
       from_name: 'BHM Funding Application'
     }
     new FormData(document.getElementById('fundingForm')).forEach((v, k) => { data[k] = v })
+    data.signature = canvas.toDataURL('image/png')
 
     const btn = document.querySelector('.submit-btn')
     btn.textContent = 'Submitting…'
@@ -599,26 +858,27 @@
     .then(([web3res]) => {
       if (web3res.success) {
         document.getElementById('fundingForm').classList.add('hidden')
-        document.getElementById('successScreen').classList.remove('hidden')
+        document.getElementById('fundingForm').style.display = 'none'
+        document.getElementById('successScreen').classList.add('show')
         window.scrollTo({ top: 0, behavior: 'smooth' })
       } else {
         btn.textContent = 'Submit Application →'
         btn.disabled = false
         document.getElementById('formError').textContent = 'Submission failed. Please try again.'
-        document.getElementById('formError').classList.remove('hidden')
+        document.getElementById('formError').classList.add('show')
       }
     })
     .catch(() => {
       btn.textContent = 'Submit Application →'
       btn.disabled = false
       document.getElementById('formError').textContent = 'Network error. Please check your connection and try again.'
-      document.getElementById('formError').classList.remove('hidden')
+      document.getElementById('formError').classList.add('show')
     })
   })
 
   document.querySelectorAll('.field').forEach(f => {
-    f.addEventListener('input', () => f.classList.remove('error'))
-    f.addEventListener('change', () => f.classList.remove('error'))
+    f.addEventListener('input', () => { f.classList.remove('error'); document.getElementById(`err-${f.name}`)?.classList.remove('show') })
+    f.addEventListener('change', () => { f.classList.remove('error'); document.getElementById(`err-${f.name}`)?.classList.remove('show') })
   })
 </script>
 </body>
