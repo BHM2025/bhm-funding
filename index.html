@@ -4,41 +4,198 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BHM Funding Application</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #f3f4f6; }
-    .sig-font { font-family: 'Georgia', serif; font-style: italic; }
+    * { font-family: 'Inter', sans-serif; }
+    body { background: #f0f4f8; }
+    .sig-font { font-family: 'Georgia', serif; font-style: italic; font-size: 1.1rem; }
+
+    .field {
+      width: 100%;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.875rem;
+      color: #1e293b;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .field:focus {
+      border-color: #1d4ed8;
+      box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
+    }
+    .field.error { border-color: #ef4444; }
+    .field::placeholder { color: #94a3b8; }
+
+    .label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 5px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .section-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      border: 1px solid #e8edf2;
+      padding: 2rem 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0f172a;
+      padding-bottom: 0.85rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #e8edf2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: #1d4ed8;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .drop-zone {
+      border: 2px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 1.1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      background: #f8fafc;
+    }
+    .drop-zone:hover, .drop-zone.drag {
+      border-color: #1d4ed8;
+      background: #eff6ff;
+    }
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f1f5f9;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      margin-top: 6px;
+      color: #334155;
+    }
+
+    .radio-opt {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #475569;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .radio-opt:has(input:checked) {
+      border-color: #1d4ed8;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    .radio-opt input { accent-color: #1d4ed8; }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 14px rgba(29,78,216,0.35);
+      transition: all 0.2s;
+    }
+    .submit-btn:hover {
+      background: linear-gradient(135deg, #1e40af, #1d4ed8);
+      box-shadow: 0 6px 20px rgba(29,78,216,0.45);
+      transform: translateY(-1px);
+    }
+
+    .sub-heading {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 1.5rem;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
   </style>
 </head>
-<body class="min-h-screen bg-gray-100 py-10 px-4">
+<body class="min-h-screen py-10 px-4">
 
-<div class="max-w-2xl mx-auto" id="app">
+<div class="max-w-2xl mx-auto">
 
   <!-- Header -->
-  <div class="bg-white rounded-2xl shadow border border-gray-200 px-8 py-6 mb-6 text-center">
-    <h1 class="text-2xl font-bold text-gray-900">Blue Harbor Media</h1>
-    <p class="text-blue-700 font-semibold text-lg mt-1">Business Funding Application</p>
+  <div class="text-center mb-8">
+    <div style="display:inline-flex;align-items:center;gap:12px;margin-bottom:12px;">
+      <div style="width:48px;height:48px;background:linear-gradient(135deg,#1d4ed8,#0ea5e9);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+        <svg width="26" height="26" fill="none" viewBox="0 0 24 24"><path fill="#fff" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+      </div>
+      <div style="text-align:left;">
+        <div style="font-size:1.35rem;font-weight:800;color:#0f172a;letter-spacing:-0.02em;">Blue Harbor Media</div>
+        <div style="font-size:0.85rem;color:#64748b;font-weight:500;">Business Funding Application</div>
+      </div>
+    </div>
+    <div style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:6px 14px;font-size:0.78rem;color:#475569;">
+      <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path fill="#22c55e" d="M12 1a11 11 0 100 22A11 11 0 0012 1zm-1 16l-4-4 1.4-1.4L11 14.2l5.6-5.6L18 10l-7 7z"/></svg>
+      Secure &amp; Confidential Application
+    </div>
   </div>
 
-  <form id="fundingForm" novalidate class="space-y-6">
+  <form id="fundingForm" novalidate>
 
-    <!-- Business Information -->
-    <section class="bg-white rounded-2xl shadow border border-gray-200 px-8 py-6">
-      <h2 class="text-lg font-bold text-gray-800 border-b pb-3 mb-5">Business Information</h2>
+    <!-- 1. Business Information -->
+    <div class="section-card">
+      <div class="section-title">
+        <span class="section-badge">1</span>
+        Business Information
+      </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
         <div>
-          <label class="label">Today's Date <span class="text-red-500">*</span></label>
+          <label class="label">Today's Date <span style="color:#ef4444">*</span></label>
           <input type="date" name="todayDate" class="field" required />
         </div>
 
         <div>
-          <label class="label">Amount Requested <span class="text-red-500">*</span></label>
-          <input type="text" name="amountRequested" placeholder="$" class="field" required />
+          <label class="label">Amount Requested <span style="color:#ef4444">*</span></label>
+          <input type="text" name="amountRequested" placeholder="e.g. $50,000" class="field" required />
         </div>
 
         <div>
-          <label class="label">Business Legal Name <span class="text-red-500">*</span></label>
+          <label class="label">Business Legal Name <span style="color:#ef4444">*</span></label>
           <input type="text" name="businessLegalName" class="field" required />
         </div>
 
@@ -48,7 +205,7 @@
         </div>
 
         <div>
-          <label class="label">Industry <span class="text-red-500">*</span></label>
+          <label class="label">Industry <span style="color:#ef4444">*</span></label>
           <select name="industry" class="field" required>
             <option value="">Select industry...</option>
             <option>Automotive</option><option>Construction</option><option>Education</option>
@@ -61,7 +218,7 @@
         </div>
 
         <div>
-          <label class="label">Entity Type <span class="text-red-500">*</span></label>
+          <label class="label">Entity Type <span style="color:#ef4444">*</span></label>
           <select name="entityType" class="field" required>
             <option value="">Select type...</option>
             <option>Corporation</option><option>Sole Proprietor</option>
@@ -70,22 +227,22 @@
         </div>
 
         <div>
-          <label class="label">Date Started (MM/YYYY) <span class="text-red-500">*</span></label>
+          <label class="label">Date Business Started (MM/YYYY) <span style="color:#ef4444">*</span></label>
           <input type="text" name="dateStarted" placeholder="MM/YYYY" class="field" required />
         </div>
 
         <div>
           <label class="label">Number of Employees</label>
-          <input type="number" name="numEmployees" min="0" class="field" />
+          <input type="number" name="numEmployees" min="0" class="field" placeholder="0" />
         </div>
 
         <div>
-          <label class="label">Federal Tax ID / EIN <span class="text-red-500">*</span></label>
+          <label class="label">Federal Tax ID / EIN <span style="color:#ef4444">*</span></label>
           <input type="text" name="ein" placeholder="XX-XXXXXXX" class="field" required />
         </div>
 
         <div>
-          <label class="label">Credit Score <span class="text-red-500">*</span></label>
+          <label class="label">Credit Score <span style="color:#ef4444">*</span></label>
           <select name="creditScore" class="field" required>
             <option value="">Select range...</option>
             <option>Poor (300–579)</option><option>Fair (580–669)</option>
@@ -96,36 +253,36 @@
         </div>
 
         <div class="sm:col-span-2">
-          <label class="label">Use of Funds <span class="text-red-500">*</span></label>
-          <textarea name="useOfFunds" rows="3" class="field" required></textarea>
+          <label class="label">Use of Funds <span style="color:#ef4444">*</span></label>
+          <textarea name="useOfFunds" rows="3" class="field" placeholder="Describe how you plan to use the funding..."></textarea>
         </div>
 
         <div class="sm:col-span-2">
-          <label class="label">What is most important to you? <span class="text-red-500">*</span></label>
-          <div class="flex flex-wrap gap-5 mt-1">
-            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="mostImportant" value="Amount" required /> Amount</label>
-            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="mostImportant" value="Cost" /> Cost</label>
-            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="mostImportant" value="Speed of Funding" /> Speed of Funding</label>
+          <label class="label" style="margin-bottom:10px;">What is most important to you? <span style="color:#ef4444">*</span></label>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <label class="radio-opt"><input type="radio" name="mostImportant" value="Amount" /> Amount</label>
+            <label class="radio-opt"><input type="radio" name="mostImportant" value="Cost" /> Cost</label>
+            <label class="radio-opt"><input type="radio" name="mostImportant" value="Speed of Funding" /> Speed of Funding</label>
           </div>
-          <p class="err hidden text-red-500 text-xs mt-1" id="err-mostImportant">Required</p>
+          <p class="hidden text-red-500 text-xs mt-1" id="err-mostImportant">Please select an option</p>
         </div>
 
         <div>
-          <label class="label">First time taking funding? <span class="text-red-500">*</span></label>
-          <div class="flex gap-5 mt-1">
-            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="firstTimeFunding" value="Yes" required /> Yes</label>
-            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="firstTimeFunding" value="No" /> No</label>
+          <label class="label" style="margin-bottom:10px;">First time taking funding? <span style="color:#ef4444">*</span></label>
+          <div style="display:flex;gap:8px;">
+            <label class="radio-opt"><input type="radio" name="firstTimeFunding" value="Yes" /> Yes</label>
+            <label class="radio-opt"><input type="radio" name="firstTimeFunding" value="No" /> No</label>
           </div>
-          <p class="err hidden text-red-500 text-xs mt-1" id="err-firstTimeFunding">Required</p>
+          <p class="hidden text-red-500 text-xs mt-1" id="err-firstTimeFunding">Please select an option</p>
         </div>
 
         <div>
-          <label class="label">Currently have a cash advance? <span class="text-red-500">*</span></label>
-          <div class="flex gap-5 mt-1">
-            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="hasCashAdvance" value="Yes" required /> Yes</label>
-            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="hasCashAdvance" value="No" /> No</label>
+          <label class="label" style="margin-bottom:10px;">Currently have a cash advance? <span style="color:#ef4444">*</span></label>
+          <div style="display:flex;gap:8px;">
+            <label class="radio-opt"><input type="radio" name="hasCashAdvance" value="Yes" /> Yes</label>
+            <label class="radio-opt"><input type="radio" name="hasCashAdvance" value="No" /> No</label>
           </div>
-          <p class="err hidden text-red-500 text-xs mt-1" id="err-hasCashAdvance">Required</p>
+          <p class="hidden text-red-500 text-xs mt-1" id="err-hasCashAdvance">Please select an option</p>
         </div>
 
         <div class="sm:col-span-2 hidden" id="cashAdvanceRow">
@@ -135,19 +292,18 @@
 
       </div>
 
-      <!-- Business Address -->
-      <h3 class="text-sm font-bold text-gray-700 mt-6 mb-3">Business Address</h3>
+      <p class="sub-heading">Business Address</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="sm:col-span-2">
-          <label class="label">Street <span class="text-red-500">*</span></label>
+          <label class="label">Street <span style="color:#ef4444">*</span></label>
           <input type="text" name="businessStreet" class="field" required />
         </div>
         <div>
-          <label class="label">City <span class="text-red-500">*</span></label>
+          <label class="label">City <span style="color:#ef4444">*</span></label>
           <input type="text" name="businessCity" class="field" required />
         </div>
         <div>
-          <label class="label">State <span class="text-red-500">*</span></label>
+          <label class="label">State <span style="color:#ef4444">*</span></label>
           <select name="businessState" class="field" required>
             <option value="">Select...</option>
             <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
@@ -163,54 +319,57 @@
           </select>
         </div>
         <div>
-          <label class="label">ZIP <span class="text-red-500">*</span></label>
+          <label class="label">ZIP <span style="color:#ef4444">*</span></label>
           <input type="text" name="businessZip" maxlength="10" class="field" required />
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Owner Personal Information -->
-    <section class="bg-white rounded-2xl shadow border border-gray-200 px-8 py-6">
-      <h2 class="text-lg font-bold text-gray-800 border-b pb-3 mb-5">Owner / Personal Information</h2>
+    <!-- 2. Owner Personal Information -->
+    <div class="section-card">
+      <div class="section-title">
+        <span class="section-badge">2</span>
+        Owner / Personal Information
+      </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
         <div>
-          <label class="label">First Name <span class="text-red-500">*</span></label>
+          <label class="label">First Name <span style="color:#ef4444">*</span></label>
           <input type="text" name="firstName" class="field" required />
         </div>
 
         <div>
-          <label class="label">Last Name <span class="text-red-500">*</span></label>
+          <label class="label">Last Name <span style="color:#ef4444">*</span></label>
           <input type="text" name="lastName" class="field" required />
         </div>
 
         <div>
-          <label class="label">Date of Birth (MM/DD/YYYY) <span class="text-red-500">*</span></label>
+          <label class="label">Date of Birth (MM/DD/YYYY) <span style="color:#ef4444">*</span></label>
           <input type="text" name="dob" placeholder="MM/DD/YYYY" class="field" required />
         </div>
 
         <div>
-          <label class="label">SSN <span class="text-red-500">*</span></label>
+          <label class="label">SSN <span style="color:#ef4444">*</span></label>
           <input type="password" name="ssn" placeholder="XXX-XX-XXXX" autocomplete="off" class="field" required />
         </div>
 
         <div>
-          <label class="label">Email <span class="text-red-500">*</span></label>
+          <label class="label">Email Address <span style="color:#ef4444">*</span></label>
           <input type="email" name="email" class="field" required />
         </div>
 
         <div>
-          <label class="label">Phone Number <span class="text-red-500">*</span></label>
+          <label class="label">Phone Number <span style="color:#ef4444">*</span></label>
           <input type="tel" name="phone" placeholder="(555) 555-5555" class="field" required />
         </div>
 
         <div>
-          <label class="label">Ownership % <span class="text-red-500">*</span></label>
+          <label class="label">Ownership % <span style="color:#ef4444">*</span></label>
           <input type="number" name="ownershipPct" min="1" max="100" placeholder="e.g. 100" class="field" required />
         </div>
 
         <div>
-          <label class="label">Do You Own Your Home? <span class="text-red-500">*</span></label>
+          <label class="label">Do You Own Your Home? <span style="color:#ef4444">*</span></label>
           <select name="ownHome" class="field" required>
             <option value="">Select...</option>
             <option>Yes</option><option>No</option>
@@ -219,19 +378,18 @@
 
       </div>
 
-      <!-- Home Address -->
-      <h3 class="text-sm font-bold text-gray-700 mt-6 mb-3">Home Address</h3>
+      <p class="sub-heading">Home Address</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="sm:col-span-2">
-          <label class="label">Street <span class="text-red-500">*</span></label>
+          <label class="label">Street <span style="color:#ef4444">*</span></label>
           <input type="text" name="homeStreet" class="field" required />
         </div>
         <div>
-          <label class="label">City <span class="text-red-500">*</span></label>
+          <label class="label">City <span style="color:#ef4444">*</span></label>
           <input type="text" name="homeCity" class="field" required />
         </div>
         <div>
-          <label class="label">State <span class="text-red-500">*</span></label>
+          <label class="label">State <span style="color:#ef4444">*</span></label>
           <select name="homeState" class="field" required>
             <option value="">Select...</option>
             <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
@@ -247,16 +405,22 @@
           </select>
         </div>
         <div>
-          <label class="label">ZIP <span class="text-red-500">*</span></label>
+          <label class="label">ZIP <span style="color:#ef4444">*</span></label>
           <input type="text" name="homeZip" maxlength="10" class="field" required />
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Documents -->
-    <section class="bg-white rounded-2xl shadow border border-gray-200 px-8 py-6">
-      <h2 class="text-lg font-bold text-gray-800 border-b pb-3 mb-5">Documents Needed to Fund</h2>
-      <div class="space-y-5">
+    <!-- 3. Documents -->
+    <div class="section-card">
+      <div class="section-title">
+        <span class="section-badge">3</span>
+        Documents Needed to Fund
+      </div>
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;font-size:0.8rem;color:#1e40af;margin-bottom:1.25rem;">
+        Please upload clear, readable copies. PDF, JPG, or PNG accepted.
+      </div>
+      <div class="space-y-4">
         <div class="upload-group" data-label="Bank Statement 1"></div>
         <div class="upload-group" data-label="Bank Statement 2"></div>
         <div class="upload-group" data-label="Bank Statement 3"></div>
@@ -265,53 +429,49 @@
         <div class="upload-group" data-label="Voided Check"></div>
         <div class="upload-group" data-label="Credit Report"></div>
       </div>
-    </section>
+    </div>
 
-    <!-- Authorization & Signature -->
-    <section class="bg-white rounded-2xl shadow border border-gray-200 px-8 py-6">
-      <h2 class="text-lg font-bold text-gray-800 border-b pb-3 mb-5">Authorization</h2>
-      <div class="bg-gray-50 rounded-lg p-4 text-xs text-gray-600 leading-relaxed mb-5">
+    <!-- 4. Authorization & Signature -->
+    <div class="section-card">
+      <div class="section-title">
+        <span class="section-badge">4</span>
+        Authorization &amp; Signature
+      </div>
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;font-size:0.8rem;color:#475569;line-height:1.7;margin-bottom:1.25rem;">
         By signing below, each of the above listed business owners/principals authorizes Blue Harbor Media and its lending partners to obtain consumer and/or business credit reports and to verify the information provided in this application. You also authorize the sharing of this application and related information with potential funding sources. This authorization is valid until revoked in writing. You certify that all information provided is true and accurate to the best of your knowledge.
       </div>
       <div>
-        <label class="label">Signature (type your full name) <span class="text-red-500">*</span></label>
-        <input type="text" id="signature" placeholder="Type full name as signature" class="field sig-font text-base" />
-        <p class="err hidden text-red-500 text-xs mt-1" id="err-signature">Signature is required</p>
-        <div id="sigPreview" class="hidden mt-2 flex items-center justify-between">
-          <p class="text-xs text-gray-500">Signed as: <span id="sigName" class="font-semibold text-gray-800 sig-font"></span></p>
-          <button type="button" onclick="clearSig()" class="text-xs text-red-500 hover:underline">Clear Signature</button>
+        <label class="label">Signature — Type your full legal name <span style="color:#ef4444">*</span></label>
+        <input type="text" id="signature" name="signature" placeholder="Full legal name" class="field sig-font" style="font-size:1.05rem;" />
+        <p class="hidden text-red-500 text-xs mt-1" id="err-signature">Signature is required</p>
+        <div id="sigPreview" class="hidden" style="margin-top:10px;padding:10px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:0.78rem;color:#64748b;">Signed as: <span id="sigName" class="sig-font" style="color:#0f172a;font-size:1rem;"></span></span>
+          <button type="button" onclick="clearSig()" style="font-size:0.75rem;color:#ef4444;background:none;border:none;cursor:pointer;">Clear</button>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- Submit -->
-    <div class="pb-10">
-      <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-xl text-base transition-colors shadow">
-        Submit Application
-      </button>
-      <p id="formError" class="hidden text-red-600 text-sm text-center mt-3">Please fill in all required fields before submitting.</p>
+    <div style="padding-bottom:3rem;">
+      <button type="submit" class="submit-btn">Submit Application →</button>
+      <p id="formError" class="hidden text-red-600 text-sm text-center mt-3 font-medium">Please complete all required fields before submitting.</p>
+      <p style="text-align:center;font-size:0.75rem;color:#94a3b8;margin-top:12px;">
+        🔒 Your information is encrypted and kept confidential
+      </p>
     </div>
 
   </form>
 
-  <!-- Success Screen (hidden) -->
-  <div id="successScreen" class="hidden bg-white rounded-2xl shadow border border-gray-200 px-8 py-16 text-center">
-    <div class="text-5xl mb-4">✅</div>
-    <h2 class="text-2xl font-bold text-gray-800 mb-2">Application Submitted!</h2>
-    <p class="text-gray-600">Thank you! We have received your funding application and will be in touch shortly.</p>
+  <!-- Success Screen -->
+  <div id="successScreen" class="hidden section-card" style="text-align:center;padding:4rem 2.5rem;">
+    <div style="width:64px;height:64px;background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;">
+      <svg width="32" height="32" fill="none" viewBox="0 0 24 24"><path fill="#fff" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+    </div>
+    <h2 style="font-size:1.5rem;font-weight:800;color:#0f172a;margin-bottom:0.5rem;">Application Submitted!</h2>
+    <p style="color:#64748b;font-size:0.95rem;">Thank you! We have received your funding application and will be in touch shortly.</p>
   </div>
 
 </div>
-
-<style>
-  .label { display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem; }
-  .field { width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none; transition: border-color 0.15s; }
-  .field:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
-  .field.error { border-color: #ef4444; }
-  .drop-zone { border: 2px dashed #d1d5db; border-radius: 0.5rem; padding: 1.25rem; text-align: center; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
-  .drop-zone:hover, .drop-zone.drag { border-color: #3b82f6; background: #eff6ff; }
-  .file-item { display: flex; align-items: center; justify-content: space-between; background: #f9fafb; padding: 0.375rem 0.75rem; border-radius: 0.375rem; font-size: 0.875rem; margin-top: 0.25rem; }
-</style>
 
 <script>
   // Build file upload widgets
@@ -319,16 +479,16 @@
     const label = group.dataset.label
     group.innerHTML = `
       <div>
-        <p class="label">${label}</p>
+        <p class="label" style="margin-bottom:6px;">${label}</p>
         <div class="drop-zone" onclick="this.nextElementSibling.click()"
           ondragover="event.preventDefault();this.classList.add('drag')"
           ondragleave="this.classList.remove('drag')"
           ondrop="handleDrop(event,this)">
-          <p class="text-sm text-gray-500">Drag & drop files here, or <span class="text-blue-600 font-medium">click to browse</span></p>
-          <p class="text-xs text-gray-400 mt-1">PDF, JPG, PNG accepted</p>
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" style="margin:0 auto 6px;display:block;"><path fill="#94a3b8" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 7V3.5L18.5 9H13zm-3 4l2-2 2 2h-1.5v3h-1v-3H10z"/></svg>
+          <p style="font-size:0.82rem;color:#64748b;">Drag & drop or <span style="color:#1d4ed8;font-weight:600;">click to browse</span></p>
         </div>
         <input type="file" multiple class="hidden" onchange="handleFileInput(event)" />
-        <div class="file-list mt-1"></div>
+        <div class="file-list"></div>
       </div>
     `
   })
@@ -338,31 +498,27 @@
     zone.classList.remove('drag')
     addFiles(zone.closest('div > div'), e.dataTransfer.files)
   }
-
   function handleFileInput(e) {
     addFiles(e.target.closest('div > div'), e.target.files)
     e.target.value = ''
   }
-
   function addFiles(container, files) {
     const list = container.querySelector('.file-list')
     Array.from(files).forEach(f => {
       const item = document.createElement('div')
       item.className = 'file-item'
-      item.innerHTML = `<span class="truncate max-w-xs text-gray-700">${f.name}</span><button type="button" onclick="this.parentElement.remove()" class="ml-2 text-red-500 hover:text-red-700 font-bold">✕</button>`
+      item.innerHTML = `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:80%;">${f.name}</span><button type="button" onclick="this.parentElement.remove()" style="background:none;border:none;color:#ef4444;cursor:pointer;font-weight:700;font-size:1rem;line-height:1;">×</button>`
       list.appendChild(item)
     })
   }
 
-  // Signature preview
+  // Signature
   document.getElementById('signature').addEventListener('input', function() {
     const val = this.value.trim()
-    const preview = document.getElementById('sigPreview')
     document.getElementById('sigName').textContent = val
-    preview.classList.toggle('hidden', !val)
+    document.getElementById('sigPreview').classList.toggle('hidden', !val)
     document.getElementById('err-signature').classList.add('hidden')
   })
-
   function clearSig() {
     document.getElementById('signature').value = ''
     document.getElementById('sigPreview').classList.add('hidden')
@@ -371,19 +527,17 @@
   // Cash advance toggle
   document.querySelectorAll('input[name="hasCashAdvance"]').forEach(r => {
     r.addEventListener('change', () => {
-      const row = document.getElementById('cashAdvanceRow')
-      row.classList.toggle('hidden', r.value !== 'Yes')
+      document.getElementById('cashAdvanceRow').classList.toggle('hidden', r.value !== 'Yes')
     })
   })
 
-  // Form validation & submit
+  // Validation & submit
   document.getElementById('fundingForm').addEventListener('submit', function(e) {
     e.preventDefault()
     let valid = true
 
-    // Clear previous errors
     document.querySelectorAll('.field.error').forEach(f => f.classList.remove('error'))
-    document.querySelectorAll('.err').forEach(el => el.classList.add('hidden'))
+    document.querySelectorAll('[id^="err-"]').forEach(el => el.classList.add('hidden'))
 
     const required = [
       'todayDate','amountRequested','businessLegalName','industry','entityType',
@@ -392,16 +546,11 @@
       'firstName','lastName','dob','ssn','email','phone','ownershipPct','ownHome',
       'homeStreet','homeCity','homeState','homeZip'
     ]
-
     required.forEach(name => {
       const el = document.querySelector(`[name="${name}"]`)
-      if (el && !el.value.trim()) {
-        el.classList.add('error')
-        valid = false
-      }
+      if (el && !el.value.trim()) { el.classList.add('error'); valid = false }
     })
 
-    // Radio groups
     ;['mostImportant','firstTimeFunding','hasCashAdvance'].forEach(name => {
       if (!document.querySelector(`[name="${name}"]:checked`)) {
         document.getElementById(`err-${name}`).classList.remove('hidden')
@@ -409,7 +558,6 @@
       }
     })
 
-    // Signature
     if (!document.getElementById('signature').value.trim()) {
       document.getElementById('err-signature').classList.remove('hidden')
       valid = false
@@ -417,16 +565,50 @@
 
     if (!valid) {
       document.getElementById('formError').classList.remove('hidden')
-      document.querySelector('.field.error, .err:not(.hidden)')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      const firstErr = document.querySelector('.field.error, [id^="err-"]:not(.hidden)')
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
 
-    document.getElementById('fundingForm').classList.add('hidden')
-    document.getElementById('successScreen').classList.remove('hidden')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    // Collect all form field values
+    const data = {
+      access_key: '0c976883-44fe-4650-8610-88bc3aeeed34',
+      subject: 'New BHM Funding Application',
+      cc: 'jenna@blueharbor-media.com,deuz@blueharbor-media.com,joemar@blueharbor-media.com,steffanie@blueharbor-media.com',
+      from_name: 'BHM Funding Application'
+    }
+    new FormData(document.getElementById('fundingForm')).forEach((v, k) => { data[k] = v })
+
+    const btn = document.querySelector('.submit-btn')
+    btn.textContent = 'Submitting…'
+    btn.disabled = true
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(res => {
+      if (res.success) {
+        document.getElementById('fundingForm').classList.add('hidden')
+        document.getElementById('successScreen').classList.remove('hidden')
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else {
+        btn.textContent = 'Submit Application →'
+        btn.disabled = false
+        document.getElementById('formError').textContent = 'Submission failed. Please try again.'
+        document.getElementById('formError').classList.remove('hidden')
+      }
+    })
+    .catch(() => {
+      btn.textContent = 'Submit Application →'
+      btn.disabled = false
+      document.getElementById('formError').textContent = 'Network error. Please check your connection and try again.'
+      document.getElementById('formError').classList.remove('hidden')
+    })
   })
 
-  // Remove error state on input
   document.querySelectorAll('.field').forEach(f => {
     f.addEventListener('input', () => f.classList.remove('error'))
     f.addEventListener('change', () => f.classList.remove('error'))
