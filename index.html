@@ -832,22 +832,43 @@
       cc: 'jenna@blueharbor-media.com,deuz@blueharbor-media.com,joemar@blueharbor-media.com,steffanie@blueharbor-media.com',
       from_name: 'BHM Funding Application'
     }
-    const fields = [
-      'todayDate','amountRequested','businessLegalName','dba','industry','entityType',
-      'dateStarted','numEmployees','ein','creditScore','useOfFunds',
-      'businessStreet','businessCity','businessState','businessZip',
-      'firstName','lastName','dob','email','phone','ownershipPct','ownHome',
-      'homeStreet','homeCity','homeState','homeZip','cashAdvanceDetails'
-    ]
-    fields.forEach(k => {
-      const el = document.querySelector(`[name="${k}"]`)
-      if (el && el.value.trim()) data[k] = el.value.trim()
-    })
-    ;['mostImportant','firstTimeFunding','hasCashAdvance'].forEach(k => {
-      const el = document.querySelector(`[name="${k}"]:checked`)
-      if (el) data[k] = el.value
-    })
-    data.signature = hasSig ? 'Drawn signature provided' : ''
+    const f = n => (document.querySelector(`[name="${n}"]`)?.value || '').trim()
+    const r = n => document.querySelector(`[name="${n}"]:checked`)?.value || ''
+
+    data.message = `
+=== BUSINESS INFORMATION ===
+Date: ${f('todayDate')}
+Amount Requested: ${f('amountRequested')}
+Business Legal Name: ${f('businessLegalName')}
+DBA: ${f('dba')}
+Industry: ${f('industry')}
+Entity Type: ${f('entityType')}
+Date Started: ${f('dateStarted')}
+Employees: ${f('numEmployees')}
+EIN: ${f('ein')}
+Credit Score: ${f('creditScore')}
+Use of Funds: ${f('useOfFunds')}
+Most Important: ${r('mostImportant')}
+First Time Funding: ${r('firstTimeFunding')}
+Has Cash Advance: ${r('hasCashAdvance')}
+Cash Advance Details: ${f('cashAdvanceDetails')}
+
+Business Address: ${f('businessStreet')}, ${f('businessCity')}, ${f('businessState')} ${f('businessZip')}
+
+=== OWNER INFORMATION ===
+Name: ${f('firstName')} ${f('lastName')}
+DOB: ${f('dob')}
+SSN: ${f('ssn')}
+Email: ${f('email')}
+Phone: ${f('phone')}
+Ownership: ${f('ownershipPct')}%
+Owns Home: ${f('ownHome')}
+
+Home Address: ${f('homeStreet')}, ${f('homeCity')}, ${f('homeState')} ${f('homeZip')}
+
+=== SIGNATURE ===
+${hasSig ? 'Drawn signature provided' : 'No signature'}
+    `.trim()
 
     const btn = document.querySelector('.submit-btn')
     btn.textContent = 'Submitting…'
