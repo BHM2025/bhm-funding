@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BHM Funding Application</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f3f4f6; }
+    .sig-font { font-family: 'Georgia', serif; font-style: italic; }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-100 py-10 px-4">
+
+<div class="max-w-2xl mx-auto" id="app">
+
+  <!-- Header -->
+  <div class="bg-white rounded-2xl shadow border border-gray-200 px-8 py-6 mb-6 text-center">
+    <h1 class="text-2xl font-bold text-gray-900">Blue Harbor Media</h1>
+    <p class="text-blue-700 font-semibold text-lg mt-1">Business Funding Application</p>
+  </div>
+
+  <form id="fundingForm" novalidate class="space-y-6">
+
+    <!-- Business Information -->
+    <section class="bg-white rounded-2xl shadow border border-gray-200 px-8 py-6">
+      <h2 class="text-lg font-bold text-gray-800 border-b pb-3 mb-5">Business Information</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+        <div>
+          <label class="label">Today's Date <span class="text-red-500">*</span></label>
+          <input type="date" name="todayDate" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">Amount Requested <span class="text-red-500">*</span></label>
+          <input type="text" name="amountRequested" placeholder="$" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">Business Legal Name <span class="text-red-500">*</span></label>
+          <input type="text" name="businessLegalName" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">DBA / Doing Business As</label>
+          <input type="text" name="dba" class="field" />
+        </div>
+
+        <div>
+          <label class="label">Industry <span class="text-red-500">*</span></label>
+          <select name="industry" class="field" required>
+            <option value="">Select industry...</option>
+            <option>Automotive</option><option>Construction</option><option>Education</option>
+            <option>Entertainment</option><option>Finance & Insurance</option>
+            <option>Food & Beverage</option><option>Healthcare</option><option>Hospitality</option>
+            <option>IT & Technology</option><option>Legal Services</option>
+            <option>Manufacturing</option><option>Real Estate</option><option>Retail</option>
+            <option>Transportation</option><option>Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="label">Entity Type <span class="text-red-500">*</span></label>
+          <select name="entityType" class="field" required>
+            <option value="">Select type...</option>
+            <option>Corporation</option><option>Sole Proprietor</option>
+            <option>LLC</option><option>Partnership</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="label">Date Started (MM/YYYY) <span class="text-red-500">*</span></label>
+          <input type="text" name="dateStarted" placeholder="MM/YYYY" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">Number of Employees</label>
+          <input type="number" name="numEmployees" min="0" class="field" />
+        </div>
+
+        <div>
+          <label class="label">Federal Tax ID / EIN <span class="text-red-500">*</span></label>
+          <input type="text" name="ein" placeholder="XX-XXXXXXX" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">Credit Score <span class="text-red-500">*</span></label>
+          <select name="creditScore" class="field" required>
+            <option value="">Select range...</option>
+            <option>Poor (300–579)</option><option>Fair (580–669)</option>
+            <option>Good (670–739)</option><option>Very Good (740–799)</option>
+            <option>Exceptional (800–850)</option>
+            <option>I Don't Know</option><option>Prefer Not to Say</option>
+          </select>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label class="label">Use of Funds <span class="text-red-500">*</span></label>
+          <textarea name="useOfFunds" rows="3" class="field" required></textarea>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label class="label">What is most important to you? <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-5 mt-1">
+            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="mostImportant" value="Amount" required /> Amount</label>
+            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="mostImportant" value="Cost" /> Cost</label>
+            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="mostImportant" value="Speed of Funding" /> Speed of Funding</label>
+          </div>
+          <p class="err hidden text-red-500 text-xs mt-1" id="err-mostImportant">Required</p>
+        </div>
+
+        <div>
+          <label class="label">First time taking funding? <span class="text-red-500">*</span></label>
+          <div class="flex gap-5 mt-1">
+            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="firstTimeFunding" value="Yes" required /> Yes</label>
+            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="firstTimeFunding" value="No" /> No</label>
+          </div>
+          <p class="err hidden text-red-500 text-xs mt-1" id="err-firstTimeFunding">Required</p>
+        </div>
+
+        <div>
+          <label class="label">Currently have a cash advance? <span class="text-red-500">*</span></label>
+          <div class="flex gap-5 mt-1">
+            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="hasCashAdvance" value="Yes" required /> Yes</label>
+            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="hasCashAdvance" value="No" /> No</label>
+          </div>
+          <p class="err hidden text-red-500 text-xs mt-1" id="err-hasCashAdvance">Required</p>
+        </div>
+
+        <div class="sm:col-span-2 hidden" id="cashAdvanceRow">
+          <label class="label">Cash Advance Details</label>
+          <input type="text" name="cashAdvanceDetails" placeholder="Balance, lender, etc." class="field" />
+        </div>
+
+      </div>
+
+      <!-- Business Address -->
+      <h3 class="text-sm font-bold text-gray-700 mt-6 mb-3">Business Address</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="sm:col-span-2">
+          <label class="label">Street <span class="text-red-500">*</span></label>
+          <input type="text" name="businessStreet" class="field" required />
+        </div>
+        <div>
+          <label class="label">City <span class="text-red-500">*</span></label>
+          <input type="text" name="businessCity" class="field" required />
+        </div>
+        <div>
+          <label class="label">State <span class="text-red-500">*</span></label>
+          <select name="businessState" class="field" required>
+            <option value="">Select...</option>
+            <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+            <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+            <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+            <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+            <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+            <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+            <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+            <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+            <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+            <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+          </select>
+        </div>
+        <div>
+          <label class="label">ZIP <span class="text-red-500">*</span></label>
+          <input type="text" name="businessZip" maxlength="10" class="field" required />
+        </div>
+      </div>
+    </section>
+
+    <!-- Owner Personal Information -->
+    <section class="bg-white rounded-2xl shadow border border-gray-200 px-8 py-6">
+      <h2 class="text-lg font-bold text-gray-800 border-b pb-3 mb-5">Owner / Personal Information</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+        <div>
+          <label class="label">First Name <span class="text-red-500">*</span></label>
+          <input type="text" name="firstName" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">Last Name <span class="text-red-500">*</span></label>
+          <input type="text" name="lastName" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">Date of Birth (MM/DD/YYYY) <span class="text-red-500">*</span></label>
+          <input type="text" name="dob" placeholder="MM/DD/YYYY" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">SSN <span class="text-red-500">*</span></label>
+          <input type="password" name="ssn" placeholder="XXX-XX-XXXX" autocomplete="off" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">Email <span class="text-red-500">*</span></label>
+          <input type="email" name="email" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">Phone Number <span class="text-red-500">*</span></label>
+          <input type="tel" name="phone" placeholder="(555) 555-5555" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">Ownership % <span class="text-red-500">*</span></label>
+          <input type="number" name="ownershipPct" min="1" max="100" placeholder="e.g. 100" class="field" required />
+        </div>
+
+        <div>
+          <label class="label">Do You Own Your Home? <span class="text-red-500">*</span></label>
+          <select name="ownHome" class="field" required>
+            <option value="">Select...</option>
+            <option>Yes</option><option>No</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Home Address -->
+      <h3 class="text-sm font-bold text-gray-700 mt-6 mb-3">Home Address</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="sm:col-span-2">
+          <label class="label">Street <span class="text-red-500">*</span></label>
+          <input type="text" name="homeStreet" class="field" required />
+        </div>
+        <div>
+          <label class="label">City <span class="text-red-500">*</span></label>
+          <input type="text" name="homeCity" class="field" required />
+        </div>
+        <div>
+          <label class="label">State <span class="text-red-500">*</span></label>
+          <select name="homeState" class="field" required>
+            <option value="">Select...</option>
+            <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+            <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+            <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+            <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+            <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+            <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+            <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+            <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+            <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+            <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+          </select>
+        </div>
+        <div>
+          <label class="label">ZIP <span class="text-red-500">*</span></label>
+          <input type="text" name="homeZip" maxlength="10" class="field" required />
+        </div>
+      </div>
+    </section>
+
+    <!-- Documents -->
+    <section class="bg-white rounded-2xl shadow border border-gray-200 px-8 py-6">
+      <h2 class="text-lg font-bold text-gray-800 border-b pb-3 mb-5">Documents Needed to Fund</h2>
+      <div class="space-y-5">
+        <div class="upload-group" data-label="Bank Statement 1"></div>
+        <div class="upload-group" data-label="Bank Statement 2"></div>
+        <div class="upload-group" data-label="Bank Statement 3"></div>
+        <div class="upload-group" data-label="Bank Statement 4"></div>
+        <div class="upload-group" data-label="Driver's License"></div>
+        <div class="upload-group" data-label="Voided Check"></div>
+        <div class="upload-group" data-label="Credit Report"></div>
+      </div>
+    </section>
+
+    <!-- Authorization & Signature -->
+    <section class="bg-white rounded-2xl shadow border border-gray-200 px-8 py-6">
+      <h2 class="text-lg font-bold text-gray-800 border-b pb-3 mb-5">Authorization</h2>
+      <div class="bg-gray-50 rounded-lg p-4 text-xs text-gray-600 leading-relaxed mb-5">
+        By signing below, each of the above listed business owners/principals authorizes Blue Harbor Media and its lending partners to obtain consumer and/or business credit reports and to verify the information provided in this application. You also authorize the sharing of this application and related information with potential funding sources. This authorization is valid until revoked in writing. You certify that all information provided is true and accurate to the best of your knowledge.
+      </div>
+      <div>
+        <label class="label">Signature (type your full name) <span class="text-red-500">*</span></label>
+        <input type="text" id="signature" placeholder="Type full name as signature" class="field sig-font text-base" />
+        <p class="err hidden text-red-500 text-xs mt-1" id="err-signature">Signature is required</p>
+        <div id="sigPreview" class="hidden mt-2 flex items-center justify-between">
+          <p class="text-xs text-gray-500">Signed as: <span id="sigName" class="font-semibold text-gray-800 sig-font"></span></p>
+          <button type="button" onclick="clearSig()" class="text-xs text-red-500 hover:underline">Clear Signature</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Submit -->
+    <div class="pb-10">
+      <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-xl text-base transition-colors shadow">
+        Submit Application
+      </button>
+      <p id="formError" class="hidden text-red-600 text-sm text-center mt-3">Please fill in all required fields before submitting.</p>
+    </div>
+
+  </form>
+
+  <!-- Success Screen (hidden) -->
+  <div id="successScreen" class="hidden bg-white rounded-2xl shadow border border-gray-200 px-8 py-16 text-center">
+    <div class="text-5xl mb-4">✅</div>
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Application Submitted!</h2>
+    <p class="text-gray-600">Thank you! We have received your funding application and will be in touch shortly.</p>
+  </div>
+
+</div>
+
+<style>
+  .label { display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem; }
+  .field { width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none; transition: border-color 0.15s; }
+  .field:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
+  .field.error { border-color: #ef4444; }
+  .drop-zone { border: 2px dashed #d1d5db; border-radius: 0.5rem; padding: 1.25rem; text-align: center; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .drop-zone:hover, .drop-zone.drag { border-color: #3b82f6; background: #eff6ff; }
+  .file-item { display: flex; align-items: center; justify-content: space-between; background: #f9fafb; padding: 0.375rem 0.75rem; border-radius: 0.375rem; font-size: 0.875rem; margin-top: 0.25rem; }
+</style>
+
+<script>
+  // Build file upload widgets
+  document.querySelectorAll('.upload-group').forEach(group => {
+    const label = group.dataset.label
+    group.innerHTML = `
+      <div>
+        <p class="label">${label}</p>
+        <div class="drop-zone" onclick="this.nextElementSibling.click()"
+          ondragover="event.preventDefault();this.classList.add('drag')"
+          ondragleave="this.classList.remove('drag')"
+          ondrop="handleDrop(event,this)">
+          <p class="text-sm text-gray-500">Drag & drop files here, or <span class="text-blue-600 font-medium">click to browse</span></p>
+          <p class="text-xs text-gray-400 mt-1">PDF, JPG, PNG accepted</p>
+        </div>
+        <input type="file" multiple class="hidden" onchange="handleFileInput(event)" />
+        <div class="file-list mt-1"></div>
+      </div>
+    `
+  })
+
+  function handleDrop(e, zone) {
+    e.preventDefault()
+    zone.classList.remove('drag')
+    addFiles(zone.closest('div > div'), e.dataTransfer.files)
+  }
+
+  function handleFileInput(e) {
+    addFiles(e.target.closest('div > div'), e.target.files)
+    e.target.value = ''
+  }
+
+  function addFiles(container, files) {
+    const list = container.querySelector('.file-list')
+    Array.from(files).forEach(f => {
+      const item = document.createElement('div')
+      item.className = 'file-item'
+      item.innerHTML = `<span class="truncate max-w-xs text-gray-700">${f.name}</span><button type="button" onclick="this.parentElement.remove()" class="ml-2 text-red-500 hover:text-red-700 font-bold">✕</button>`
+      list.appendChild(item)
+    })
+  }
+
+  // Signature preview
+  document.getElementById('signature').addEventListener('input', function() {
+    const val = this.value.trim()
+    const preview = document.getElementById('sigPreview')
+    document.getElementById('sigName').textContent = val
+    preview.classList.toggle('hidden', !val)
+    document.getElementById('err-signature').classList.add('hidden')
+  })
+
+  function clearSig() {
+    document.getElementById('signature').value = ''
+    document.getElementById('sigPreview').classList.add('hidden')
+  }
+
+  // Cash advance toggle
+  document.querySelectorAll('input[name="hasCashAdvance"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const row = document.getElementById('cashAdvanceRow')
+      row.classList.toggle('hidden', r.value !== 'Yes')
+    })
+  })
+
+  // Form validation & submit
+  document.getElementById('fundingForm').addEventListener('submit', function(e) {
+    e.preventDefault()
+    let valid = true
+
+    // Clear previous errors
+    document.querySelectorAll('.field.error').forEach(f => f.classList.remove('error'))
+    document.querySelectorAll('.err').forEach(el => el.classList.add('hidden'))
+
+    const required = [
+      'todayDate','amountRequested','businessLegalName','industry','entityType',
+      'dateStarted','ein','useOfFunds','creditScore',
+      'businessStreet','businessCity','businessState','businessZip',
+      'firstName','lastName','dob','ssn','email','phone','ownershipPct','ownHome',
+      'homeStreet','homeCity','homeState','homeZip'
+    ]
+
+    required.forEach(name => {
+      const el = document.querySelector(`[name="${name}"]`)
+      if (el && !el.value.trim()) {
+        el.classList.add('error')
+        valid = false
+      }
+    })
+
+    // Radio groups
+    ;['mostImportant','firstTimeFunding','hasCashAdvance'].forEach(name => {
+      if (!document.querySelector(`[name="${name}"]:checked`)) {
+        document.getElementById(`err-${name}`).classList.remove('hidden')
+        valid = false
+      }
+    })
+
+    // Signature
+    if (!document.getElementById('signature').value.trim()) {
+      document.getElementById('err-signature').classList.remove('hidden')
+      valid = false
+    }
+
+    if (!valid) {
+      document.getElementById('formError').classList.remove('hidden')
+      document.querySelector('.field.error, .err:not(.hidden)')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
+
+    document.getElementById('fundingForm').classList.add('hidden')
+    document.getElementById('successScreen').classList.remove('hidden')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  })
+
+  // Remove error state on input
+  document.querySelectorAll('.field').forEach(f => {
+    f.addEventListener('input', () => f.classList.remove('error'))
+    f.addEventListener('change', () => f.classList.remove('error'))
+  })
+</script>
+</body>
+</html>
