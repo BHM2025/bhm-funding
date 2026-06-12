@@ -747,7 +747,7 @@
       fd.append('file', chip._file)
       fd.append('docType', chip.dataset.docType || 'Document')
       try {
-        const res = await fetch('https://loan-crm-two.vercel.app/api/upload-public', { method: 'POST', body: fd })
+        const res = await fetch('https://maple-x-loan-crm.vercel.app/api/upload-public', { method: 'POST', body: fd })
         const json = await res.json()
         console.log('upload response:', JSON.stringify(json))
         if (json.ok) docs.push({ url: json.url, name: json.name, docType: chip.dataset.docType || 'Document' })
@@ -951,7 +951,7 @@ ${hasSig ? 'Drawn signature provided' : 'No signature'}
         body: JSON.stringify(data),
         mode: 'no-cors'
       }),
-      fetch('https://loan-crm-two.vercel.app/api/webhooks/bhm', {
+      fetch('https://maple-x-loan-crm.vercel.app/api/webhooks/bhm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(crmData)
